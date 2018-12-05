@@ -31,7 +31,7 @@ class MenuCom extends Component {
     return (
       <div>
         <Menu
-          mode='vertical'
+          mode='inline'
           theme='dark'
           style={{ height: '100vh' }}
         >

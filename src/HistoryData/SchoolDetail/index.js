@@ -46,6 +46,7 @@ class SchoolDetail extends Component {
           }
           
         </Card>
+        
       </div>
     )
   }

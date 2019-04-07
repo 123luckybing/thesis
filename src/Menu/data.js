@@ -28,8 +28,5 @@ const menu = [{
     title: '专业及学校推荐',
     path:'/home/recommend/all',
   }]
-},{
-  title: '在线咨询',
-  path:'/home/qa'
 }];
 export default menu;

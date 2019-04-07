@@ -15,7 +15,6 @@ class HighArea extends Component {
   // 查询
   search = () => {
     this.props.form.validateFields((err, value) => {
-      // schoolName: "东北农业大学", year: undefined, province: undefined
       if(!err) {
         console.log(data)
         console.log(value)

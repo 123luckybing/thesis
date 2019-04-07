@@ -9,7 +9,7 @@ class Home extends Component {
           <Col  span={5}>
             <Menu />
           </Col>
-          <Col span={12}>
+          <Col span={19}>
             <div>
               {this.props.children}
             </div>

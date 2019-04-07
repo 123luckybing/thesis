@@ -1,15 +1,26 @@
 import React, { Component } from 'react';
 import { Card,Form,Button,Input } from 'antd';
+import data from './data'
 const FormItem = Form.Item;
 class HighArea extends Component {
   constructor() {
     super();
-    this.reset = this.reset.bind(this);
   }
 
   // 点击重置按钮
-  reset() {
+  reset = () => {
     this.props.form.resetFields();
+  }
+
+  // 查询
+  search = () => {
+    this.props.form.validateFields((err, value) => {
+      // schoolName: "东北农业大学", year: undefined, province: undefined
+      if(!err) {
+        console.log(data)
+        console.log(value)
+      }
+    })
   }
   
   render() {
@@ -20,14 +31,12 @@ class HighArea extends Component {
           <Form layout='inline'>
             <FormItem label='高校名称'>
               {
-                getFieldDecorator('schoolName')(
-                  <Input />
-                )
-              }
-            </FormItem>
-            <FormItem label='科类'>
-            {
-                getFieldDecorator('subjectName')(
+                getFieldDecorator('schoolName', {
+                  rules: [{
+                    required: true,
+                    message: '请输入高校名称'
+                  }]
+                })(
                   <Input />
                 )
               }
@@ -39,23 +48,15 @@ class HighArea extends Component {
                 )
               }
             </FormItem>
-            <FormItem label='高校所在省份'>
+            <FormItem label='地区'>
             {
                 getFieldDecorator('province')(
                   <Input />
                 )
               }
-              1
-            </FormItem>
-            <FormItem label='批次'>
-            {
-                getFieldDecorator('band')(
-                  <Input />
-                )
-              }
             </FormItem>
             <FormItem>
-              <Button type='primary'>查询</Button>
+              <Button type='primary' onClick={this.search}>查询</Button>
             </FormItem>
             <FormItem>
               <Button type='primary' onClick={this.reset}>重置</Button>

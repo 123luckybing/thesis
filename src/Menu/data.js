@@ -5,7 +5,7 @@ const menu = [{
     title:'地区批次线查询',
     path: '/home/search/area'
   },{
-    title:'高校专业分地区分数线',
+    title:'高校各专业地区录取分数线',
     path: '/home/search/high'
   },{
     title:'高校分地区录取分数线',

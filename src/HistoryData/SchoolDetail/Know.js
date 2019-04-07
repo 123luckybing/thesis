@@ -36,7 +36,11 @@ class Know extends Component {
         <Form layout='inline'>
           <FormItem label='请输入高校名称'>
             {
-              getFieldDecorator('schoolName')(
+              getFieldDecorator('schoolName', {
+                rules: [{
+                  required: true,
+                  message: '高校名称不能为空'}]
+              })(
                 <Input />
               )
             }

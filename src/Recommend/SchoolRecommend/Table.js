@@ -52,7 +52,6 @@ const columns = [{
 class CommendTable extends Component {
   render() {
     const { targetData } = this.props
-    console.log(targetData)
     return (
       <div>
         <Table

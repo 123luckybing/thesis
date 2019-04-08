@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Form, Card, Select, Input, Button, Alert } from 'antd'
 import TableList from './Table'
 import data from './data'
+import target from './target'
 const FormItem = Form.Item
 const Option = Select.Option
 class SchoolRecommend extends Component {
@@ -87,7 +88,13 @@ class SchoolRecommend extends Component {
             <FormItem label='目标去向'>
             {
                 getFieldDecorator('target')(
-                  <Input />
+                  <Select style={{ width: '80px' }}>
+                    {
+                      target.map((elem,index) => {
+                        return  <Option value={elem} key={index}>{elem}</Option>
+                      })
+                    }
+                  </Select>
                 )
               }
             </FormItem>

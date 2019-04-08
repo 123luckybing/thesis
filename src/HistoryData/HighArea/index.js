@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
-import { Card,Form,Button,Input } from 'antd';
+import { Card,Form,Button,Input, Select } from 'antd';
 import data from './data'
+import target from '../../Recommend/SchoolRecommend/target'
+import echarts from 'echarts';
+import 'echarts/lib/chart/bar';
+import 'echarts/lib/component/tooltip';
+import 'echarts/lib/component/title';
 const FormItem = Form.Item;
+const Option = Select.Option
 class HighArea extends Component {
   constructor() {
     super();
@@ -12,12 +18,127 @@ class HighArea extends Component {
     this.props.form.resetFields();
   }
 
+  // echart图标
+  echart = (province, min ,max, average) => {
+    var myChart = echarts.init(document.getElementById('main'));
+    var colors = ['#61a0a8', '#91c7ae', '#ca8622'];
+    myChart.setOption({
+      color: colors,
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'cross',
+            crossStyle: {
+            color: '#999'
+          }
+        }
+      },
+      toolbox: {
+        feature: {
+            dataView: {show: true, readOnly: false},
+            magicType: {show: true, type: ['line', 'bar']},
+            restore: {show: true},
+            saveAsImage: {show: true}
+        }
+      },
+      legend: {
+        data:['最高分','最低分','平均分']
+      },
+      xAxis: [
+        {
+            type: 'category',
+            data: province,
+            axisPointer: {
+                type: 'shadow'
+            }
+        }
+      ],
+      yAxis: [
+        {
+            type: 'value',
+            name: ' 平均分',
+            min: 700,
+            max: 300,
+            interval: 100,
+            axisLabel: {
+                formatter: '{value}分'
+            },
+            axisLine: {
+              lineStyle: {
+                  color: colors[2]
+              }
+          },
+        },{
+            type: 'value',
+            name: '最低分',
+            min: 700,
+            max: 300,
+            interval: 100,
+            axisLabel: {
+                formatter: '{value}分'
+            },
+            axisLine: {
+              lineStyle: {
+                  color: colors[1]
+              }
+          },
+        },{
+            type: 'value',
+            name: '最高分',
+            min: 700,
+            max: 300,
+            offset: 50,
+            interval: 100,
+            axisLabel: {
+                formatter: '{value}分'
+            },
+            axisLine: {
+              lineStyle: {
+                  color: colors[0]
+              }
+          },
+        }
+      ],
+      series: [
+        {
+            name:'最低分',
+            type:'bar',
+            data: min
+        },
+        {
+            name:'最高分',
+            type:'bar',
+            data: max
+        },
+        {
+            name:'平均分',
+            type:'line',
+            yAxisIndex: 1,
+            data:average
+        }
+      ]
+    })
+  }
   // 查询
   search = () => {
     this.props.form.validateFields((err, value) => {
       if(!err) {
-        console.log(data)
-        console.log(value)
+        const targetData = data.filter((elem) => {
+          const subject = (elem.local_type_name === value.subject)
+          const area = (value.province ? (elem.local_province_name === value.province) : 1)
+          return subject && area
+        })
+        const province = [];
+        const max = [];
+        const min = [];
+        const average = [];
+        for (var i = 0; i < targetData.length; i++){
+          province.push(targetData[i].local_province_name);
+          max.push(targetData[i].max)
+          min.push(targetData[i].min)
+          average.push(targetData[i].average)
+        }
+        this.echart(province, min ,max, average)
       }
     })
   }
@@ -47,10 +168,31 @@ class HighArea extends Component {
                 )
               }
             </FormItem>
-            <FormItem label='地区'>
+            <FormItem label='科类'>
+            {
+                getFieldDecorator('subject', {
+                  rules:[{
+                    required: true,
+                    message: '请选择科类'
+                  }]
+                })(
+                  <Select style={{ width: '80px' }}>
+                    <Option value='文科'>文科</Option>
+                    <Option value='理科'>理科</Option>
+                  </Select>
+                )
+              }
+            </FormItem>
+            <FormItem label='目标地区'>
             {
                 getFieldDecorator('province')(
-                  <Input />
+                  <Select style={{ width: '80px' }}>
+                    {
+                      target.map((elem,index) => {
+                        return <Option value={elem} key={index}>{elem}</Option>
+                      })
+                    }
+                  </Select>
                 )
               }
             </FormItem>
@@ -62,6 +204,7 @@ class HighArea extends Component {
             </FormItem>
           </Form>
         </Card>
+        <div id='main' style={{ width: '100%', overflow:'scroll', height: '400px' }}></div>
       </div>
     )
   }

@@ -90,13 +90,12 @@ class MajorRecommend extends Component {
                 <FormItem key={index}>
                   <h4>{index + 1}.{elem.title}</h4>
                   {
-                    getFieldDecorator(`${index}`
-                    //  {
-                    //   rules: [{
-                    //     required: true,
-                    //     message: '请选择'
-                    //   }]
-                    // }
+                    getFieldDecorator(`${index}`,{
+                      rules: [{
+                        required: true,
+                        message: '请选择'
+                      }]
+                    }
                     )(
                       <RadioGroup>
                         <Radio value={elem.valueFirst}>{elem.contentFirst}</Radio>

@@ -8,7 +8,7 @@ export default function Employment(arr, rate) {
     },
     tooltip: {
       trigger: 'axis',
-      formatter: "{b}<br/> {a} : ({c}%)",
+      formatter: "{b}<br/> {a} : {c}%",
       axisPointer: {
         type: 'shadow',
       }

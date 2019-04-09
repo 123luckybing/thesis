@@ -4,6 +4,8 @@ import data from './data'
 import './index.css'
 import Employment from './Echart/Employment'
 import sex from './Echart/sex'
+import area from './Echart/Area'
+import job from './Echart/job'
 import 'echarts/lib/chart/bar';
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/title';
@@ -26,13 +28,23 @@ class MajorDetail extends Component {
 
   componentDidMount() {
     const { targetData } = this.state
-    const arr = []; const rate = [];
+    const arr = []; const rate = []; const areaArr = []; const areaRate = []; const jobArr = []; const jobRate = []
     for(var i = 0 ; i < targetData.jobdetail[1].length; i++ ) {
       arr.push(targetData.jobdetail[1][i].name)
       rate.push(targetData.jobdetail[1][i].rate)
     }
+    for (var i = 0 ; i < targetData.jobdetail[2].length; i++) {
+      areaArr.push(targetData.jobdetail[2][i].area)
+      areaRate.push(targetData.jobdetail[2][i].rate)
+    }
+    for(var i = 0 ; i < targetData.jobdetail[3].length; i++) {
+      jobArr.push(targetData.jobdetail[3][i].detail_pos)
+      jobRate.push(targetData.jobdetail[3][i].rate)
+    }
     sex(targetData.rate) // 行别比例echart
     Employment(arr, rate) // 就业行业分布
+    area(areaArr,areaRate) // 就业地区分布
+    job(jobArr,jobRate) // 就业岗位分布
   }
 
   render() {
@@ -105,9 +117,11 @@ class MajorDetail extends Component {
         </div>
         <div>
           <div className='title'>就业岗位分布</div>
+          <div id='job' style={{ width: '600px', height: '300px' }}></div>
         </div>
         <div>
           <div className='title'>就业地区分布</div>
+          <div id='area' style={{ width: '100%', height: '400px' }}></div>
         </div>
       </div>
     )

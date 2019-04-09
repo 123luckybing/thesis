@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, Tooltip } from 'antd'
+import { Button, Tooltip, Tabs } from 'antd'
 import data from './data'
 import './index.css'
 import Employment from './Echart/Employment'
@@ -9,6 +9,7 @@ import job from './Echart/job'
 import 'echarts/lib/chart/bar';
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/title';
+const { TabPane } = Tabs;
 class MajorDetail extends Component {
   constructor() {
     super()
@@ -117,7 +118,37 @@ class MajorDetail extends Component {
         </div>
         <div>
           <div className='title'>就业岗位分布</div>
-          <div id='job' style={{ width: '600px', height: '300px' }}></div>
+          <div id='job' style={{
+            width: '600px',
+            height: '300px',
+            display: 'inline-block'
+          }}></div>
+          <div style={{ 
+            display: 'inline-block',
+            verticalAlign: 'top',
+            border: '1px solid #ededed',
+            padding: '10px',
+            width: '600px' 
+          }}>
+            <Tabs defaultActiveKey="1">
+                {
+                  targetData.jobdetail[3].map((elem,index) => {
+                    return (
+                      <TabPane tab={elem.detail_pos} key={index}>
+                        <div>
+                          <h4>具体职位</h4>
+                          <p>{elem.detail_job}</p>
+                        </div>
+                        <div>
+                          <h4>所在行业</h4>
+                          <p>{elem.name}</p>
+                        </div>
+                      </TabPane>
+                    )
+                  })
+                }
+            </Tabs>
+          </div>
         </div>
         <div>
           <div className='title'>就业地区分布</div>

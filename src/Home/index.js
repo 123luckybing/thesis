@@ -10,7 +10,7 @@ class Home extends Component {
             <Menu />
           </Col>
           <Col span={19}>
-            <div>
+            <div style={{ height: '100vh', overflow: 'scroll' }}>
               {this.props.children}
             </div>
           </Col>

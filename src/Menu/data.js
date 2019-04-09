@@ -25,7 +25,7 @@ const menu = [{
     title: '学校推荐',
     path:'/home/recommend/school',
   },{
-    title: '专业及学校推荐',
+    title: '十大热门专业解析',
     path:'/home/recommend/all',
   }]
 }];

@@ -10,6 +10,7 @@ import High from './HistoryData/High';
 import HighArea from './HistoryData/HighArea';
 import Detail from './HistoryData/SchoolDetail';
 import MajorDetail from './Recommend/MajorDetail'
+import MajorSchool from './Recommend/MajorSchoolRecd'
 class App extends Component {
   render() {
     return (
@@ -17,6 +18,7 @@ class App extends Component {
         <Router>
           <div>
             <Switch>
+              <Route path='/majorSchool' component={MajorSchool}></Route>
               <Route path='/majorDetail/:id' component={MajorDetail}/>
               <Route path='/' component={() => 
                 <Home>

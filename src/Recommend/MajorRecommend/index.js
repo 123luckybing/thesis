@@ -17,7 +17,7 @@ class MajorRecommend extends Component {
             <FormItem label='概述'>{result[lastResult].detail}</FormItem>
             <FormItem label='适合领域'>{result[lastResult].area}</FormItem>
             <FormItem label='适合职业'>{result[lastResult].job}</FormItem>
-            <FormItem><a href='/majorSchool'>快来根据专业选择适合你的学校吧～点击查看</a></FormItem>
+            <FormItem><a href={`/majorSchool/${result[lastResult].major}`}>快来根据专业选择适合你的学校吧～点击查看</a></FormItem>
           </Form>
         </div>
       )
@@ -91,7 +91,8 @@ class MajorRecommend extends Component {
                 <FormItem key={index}>
                   <h4>{index + 1}.{elem.title}</h4>
                   {
-                    getFieldDecorator(`${index}`,{
+                    getFieldDecorator(`${index}`,
+                    {
                       rules: [{
                         required: true,
                         message: '请选择'

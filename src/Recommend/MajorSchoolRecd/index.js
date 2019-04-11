@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import { Input, Form, Button, Select, Table } from 'antd'
+import { Input, Form, Button, Select, Table, Alert } from 'antd'
 import targetList from './province'
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -136,9 +136,14 @@ class MajorSchool extends Component {
   render (){
     const { getFieldDecorator } = this.props.form;
     const { dataList } = this.state
+    const { major } = this.props.match.params
+    let tip = (
+      <div>推荐您的专业如下: {major}, <br/>看看哪些学校设立了这些专业呢，快来进行搜索吧～</div>
+    )
     return (
       <div style={{ margin: '20px auto', width: '1000px' }}>
-        <Form layout='inline' style={{ margin: '0 auto', width: '1000px' }}>
+        <Alert message={tip} type="info" style={{ margin: "0 auto" }}/>
+        <Form layout='inline' style={{ margin: '20px auto', width: '1000px' }}>
           <FormItem label='专业'>
             {
               getFieldDecorator('major',{

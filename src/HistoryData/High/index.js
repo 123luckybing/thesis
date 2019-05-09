@@ -18,7 +18,6 @@ class High extends Component {
           const subject = (value.subject ? (elem.local_type_name === value.subject) : 1)
           return schoolName && subject && major
         })
-        console.log(targetData)
         const province = [];
         const min = [];
         const max = [];

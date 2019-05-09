@@ -49,7 +49,6 @@ class Area extends Component {
         }).catch((err) => {
           console.log(err)
         })
-        console.log(value);
       }
     });
   }

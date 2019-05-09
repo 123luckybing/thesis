@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import axios from 'axios'
-import { Input, Form, Button, Select, Table, Alert } from 'antd'
+import computer from './data/computer'
+import money from './data/money'
+import doctor from './data/doctor'
+import lawer from './data/lawer'
+import { Form, Button, Select, Table, Alert } from 'antd'
 import targetList from './province'
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -49,7 +52,10 @@ let columns = [{
   title: '所在省份',
   dataIndex: 'province_name',
   key: 'province_name',
-  width: 100
+  width: 100,
+  render: () => {
+    return '北京'
+  }
 }, {
   title: '学校类型',
   dataIndex: 'type_name',
@@ -68,22 +74,28 @@ class MajorSchool extends Component {
   }
 
   // 获取学校列表
-  getSchoolList = (value, page) => {
-    axios.get('https://bird.ioliu.cn/v1?url=https://gkcx.eol.cn/api', {
-      params: {
-        keyword: value.major,
-        province_id: value.province,
-        uri: 'hxsjkqt/api/gk/schoolSpecial/lists',
-        page: page ? page : ''
-      }
-    }).then((res) => {
+  getSchoolList = (value) => {
+    if (value.major === '计算机') {
       this.setState({
-        dataList: res.data.data.item,
-        total: res.data.data.numFound
-      })
-    }).catch((err) => {
-      console.log(err)
-    })
+        dataList: computer.data.item
+      }) 
+    }
+    if (value.major === '经济学') {
+      console.log(money)
+      this.setState({
+        dataList: money.data.item
+      }) 
+    }
+    if (value.major === '医学') {
+      this.setState({
+        dataList: doctor.data.item
+      }) 
+    }
+    if(value.major === '法学') {
+      this.setState({
+        dataList: lawer.data.item
+      }) 
+    }
   }
 
   // 查询
@@ -152,7 +164,12 @@ class MajorSchool extends Component {
                   message: '请输入专业'
                 }]
               })(
-                <Input />
+                <Select style={{ width: '180px' }}>
+                  <Option key="1" value='计算机'>计算机</Option>
+                  <Option key="2" value='经济学'>经济学</Option>
+                  <Option key="3" value='医学'>医学</Option>
+                  <Option key="4" value='法学'>法学</Option>
+                </Select>
               )
             }
           </FormItem>
@@ -182,19 +199,8 @@ class MajorSchool extends Component {
           dataSource={dataList}
           rowKey={record => record.id}
           style={{ margin: '20px' }}
-          pagination={false}
+          pagination={true}
         />
-        <div style={{ float: 'right', marginTop: '10px'}}>
-          <Button
-            type='primary'
-            onClick={this.preview}
-          >上一页</Button>
-          <Button
-            type='primary'
-            style={{ margin: '20px' }}
-            onClick={this.next}
-          >下一页</Button>
-        </div>
       </div>
     )
   }

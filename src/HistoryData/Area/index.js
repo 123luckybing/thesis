@@ -37,12 +37,11 @@ class Area extends Component {
   search = () => {
     this.props.form.validateFields( (err,value) => {
       if(!err) {
-        axios.get('https://bird.ioliu.cn/v1?url=https://gkcx.eol.cn/api?uri=hxsjkqt/api/gk/score/proprovince', {
-          params: {
-            province_id: value.province,
-            year: value.year_num,
-            type_id: value.type_subject
-          }
+        axios.post('https://bird.ioliu.cn/v1?url=https://gkcx.eol.cn/gkcx/api', {
+          province_id: value.province,
+          year: value.year_num,
+          type_id: value.type_subject,
+          uri: "hxsjkqt/api/gk/score/proprovince"
         }).then((res) => {
           this.setState({
             dataList: res.data.data.item

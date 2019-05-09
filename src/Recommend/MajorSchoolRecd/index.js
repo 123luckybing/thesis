@@ -81,7 +81,6 @@ class MajorSchool extends Component {
       }) 
     }
     if (value.major === '经济学') {
-      console.log(money)
       this.setState({
         dataList: money.data.item
       }) 

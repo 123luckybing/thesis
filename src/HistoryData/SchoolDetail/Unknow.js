@@ -1,30 +1,28 @@
 import React, { Component } from 'react';
 import { Form,Button, Input,Radio, Table } from 'antd';
-import axios from 'axios'
+import data from './data/schoolDetail'
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group
 let columns = [{
   title: '学校名称',
-  dataIndex: 'school_name',
-  key: 'school_name',
-  width: 120
+  dataIndex: 'name',
+  key: 'name',
+  width: 150
 }, {
   title: '是否985/211',
-  dataIndex: 'is_true',
-  key: 'is_true',
-  width: 160,
-  render: (is_true) => {
-    return is_true === 1 ? '是' : '否'
+  width: 130,
+  render: () => {
+    return '是'
   }
 }, {
   title: '所在省份',
-  dataIndex: 'province',
-  key: 'province',
+  dataIndex: 'province_name',
+  key: 'province_name',
   width: 100
 }, {
   title: '学校类别',
-  dataIndex: 'school_type',
-  key: 'school_type',
+  dataIndex: 'type_name',
+  key: 'type_name',
   width: 120
 }, {
   title: '包含专业',
@@ -50,18 +48,16 @@ class Unknow extends Component {
   search = () => {
     this.props.form.validateFields((err, value) => {
       if (!err) {
-        value.is = parseInt(value.is)
-        value.major = `'%${value.major}%'` // 数据库模糊查询
-        axios.get('/api/history/conform', {
-          params: value
-        }).then((res) => {
-          this.setState({
-            dataList: res.data.data
-          })
-        }).catch((err) => {
-          console.log(err)
+        const matchData = data.filter((elem, index) => {
+           const is = elem.f211 === '1' || elem.f985 === '1'
+           const isNot = elem.f211 !== '1' && elem.f985 !== '1'
+           const province = ( value.province ? (value.province === elem.province_name) : 1 )
+           const isMajor = elem.major.indexOf(value.major) !== -1
+          return ( value.is === '1' ? is : isNot) && province && isMajor
         })
-        console.log(value)
+        this.setState({
+          dataList: matchData
+        })
       }
     })
   }
@@ -98,13 +94,6 @@ class Unknow extends Component {
               )
             }
           </FormItem>
-          <FormItem label='高校类型'>
-            {
-              getFieldDecorator('type')(
-                <Input />
-              )
-            }
-          </FormItem>
           <FormItem label='包含专业'>
             {
               getFieldDecorator('major', {
@@ -126,7 +115,7 @@ class Unknow extends Component {
           columns={columns}
           dataSource={dataList}
           style={{ margin: '10px 10px'}}
-          rowKey={record => record.id}
+          rowKey={record => record.school_id}
         />
       </div>
     )

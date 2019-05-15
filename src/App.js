@@ -3,6 +3,7 @@ import { Route, BrowserRouter as Router,Switch} from 'react-router-dom';
 import MajorRecommend from './Recommend/MajorRecommend';
 import SchoolRecommend from './Recommend/SchoolRecommend';
 import AllRecommend from './Recommend/AllRecommend';
+import Index from './IndexPage'
 import Area from './HistoryData/Area';
 import Home from './Home';
 import High from './HistoryData/High';
@@ -22,6 +23,7 @@ class App extends Component {
               <Route path='/' component={() => 
                 <Home>
                   <Switch>
+                    <Route path='/' component={Index}/>
                     <Route path='/home/recommend/major' component={MajorRecommend}/>
                     <Route path='/home/recommend/school' component={SchoolRecommend}/>
                     <Route path='/home/recommend/all' component={AllRecommend}/>

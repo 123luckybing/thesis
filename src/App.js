@@ -23,7 +23,7 @@ class App extends Component {
               <Route path='/' component={() => 
                 <Home>
                   <Switch>
-                    <Route path='/' component={Index}/>
+                    <Route exact path='/' component={Index}/>
                     <Route path='/home/recommend/major' component={MajorRecommend}/>
                     <Route path='/home/recommend/school' component={SchoolRecommend}/>
                     <Route path='/home/recommend/all' component={AllRecommend}/>

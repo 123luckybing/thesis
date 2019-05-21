@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import province from '../../Recommend/MajorSchoolRecd/province'
 import { Card,Form,Button,Select, Table } from 'antd';
+import BeiJing from './data/Beijing'
+import HeiLongJiang from './data/HeiLongJiang'
+import JiLin from './data/JiLin'
+import LiaoNing from './data/LiaoNing'
 const FormItem = Form.Item;
 const Option = Select.Option;
 let columns = [{
@@ -37,18 +39,46 @@ class Area extends Component {
   search = () => {
     this.props.form.validateFields( (err,value) => {
       if(!err) {
-        axios.post('https://bird.ioliu.cn/v1?url=https://gkcx.eol.cn/gkcx/api', {
-          province_id: value.province,
-          year: value.year_num,
-          type_id: value.type_subject,
-          uri: "hxsjkqt/api/gk/score/proprovince"
-        }).then((res) => {
-          this.setState({
-            dataList: res.data.data.item
+        if (value.province == '11') {
+          const data = BeiJing.data.item.filter((elem) => {
+            const year = ( elem.year === parseInt(value.year_num) )
+            const type = (value.type_subject ? (elem.local_type_name === value.type_subject) : 1)
+            return year && type
           })
-        }).catch((err) => {
-          console.log(err)
-        })
+          this.setState({
+            dataList: data
+          })
+        }
+        if (value.province == '22') {
+          const data = JiLin.data.item.filter((elem) => {
+            const year = ( elem.year === parseInt(value.year_num) )
+            const type = (value.type_subject ? (elem.local_type_name === value.type_subject) : 1)
+            return year && type
+          })
+          this.setState({
+            dataList: data
+          })
+        }
+        if (value.province == '21') {
+          const data = LiaoNing.data.item.filter((elem) => {
+            const year = ( elem.year === parseInt(value.year_num) )
+            const type = (value.type_subject ? (elem.local_type_name === value.type_subject) : 1)
+            return year && type
+          })
+          this.setState({
+            dataList: data
+          })
+        }
+        if (value.province == '23') {
+          const data = HeiLongJiang.data.item.filter((elem) => {
+            const year = ( elem.year === parseInt(value.year_num) )
+            const type = (value.type_subject ? (elem.local_type_name === value.type_subject) : 1)
+            return year && type
+          })
+          this.setState({
+            dataList: data
+          })
+        }
       }
     });
   }
@@ -67,13 +97,17 @@ class Area extends Component {
         <Form layout='inline'>
           <FormItem label='生源地省份'>
             {
-               getFieldDecorator('province')(
+               getFieldDecorator('province', {
+                rules: [{
+                  required: true,
+                  message: '请输入生源地省份'
+                }]
+               })(
                 <Select style={{ width: 100}}>
-                  {
-                    province.map((elem,index) => {
-                      return <Option key={index} value={elem.id}>{elem.name}</Option>
-                    })
-                  }
+                  <Option key="1" value='23'>黑龙江</Option>
+                  <Option key="2" value='22'>吉林</Option>
+                  <Option key="3" value='21'>辽宁</Option>
+                  <Option key="4" value='11'>北京</Option>
                 </Select>
               )
             }
@@ -100,8 +134,8 @@ class Area extends Component {
             {
               getFieldDecorator('type_subject')(
                 <Select style={{ width: 100}}>
-                  <Option value='2'>文科</Option>
-                  <Option value='1'>理科</Option>
+                  <Option value='文科'>文科</Option>
+                  <Option value='理科'>理科</Option>
                 </Select>
               )
             }

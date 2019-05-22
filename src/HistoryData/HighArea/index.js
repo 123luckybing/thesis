@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card,Form,Button,Input, Select } from 'antd';
+import { Card,Form,Button, Select } from 'antd';
 import data from './data'
 import target from '../../Recommend/SchoolRecommend/target'
 import echarts from 'echarts';
@@ -157,14 +157,18 @@ class HighArea extends Component {
                     message: '请输入高校名称'
                   }]
                 })(
-                  <Input />
+                  <Select style={{ width: '150px' }}>
+                    <Option value='东北农业大学'>东北农业大学</Option>
+                  </Select>
                 )
               }
             </FormItem>
             <FormItem label='年份'>
             {
                 getFieldDecorator('year')(
-                  <Input />
+                  <Select style={{ width: '100px' }}>
+                    <Option value='2017'>2017</Option>
+                  </Select>
                 )
               }
             </FormItem>

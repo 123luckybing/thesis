@@ -4,7 +4,7 @@ import echarts from 'echarts';
 import 'echarts/lib/chart/bar';
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/title';
-import { Form,Card,Button, Input,Select } from 'antd';
+import { Form,Card,Button, Select } from 'antd';
 const FormItem = Form.Item;
 const Option = Select.Option;
 class High extends Component {
@@ -156,14 +156,27 @@ class High extends Component {
                     message: '高校名称不能为空'
                   }]
                 })(
-                  <Input />
+                  <Select style={{ width: 140}}>
+                    <Option value='东北农业大学'>东北农业大学</Option>
+                  </Select>
                 )
               }
             </FormItem>
             <FormItem label='专业名称'>
               {
                 getFieldDecorator('major')(
-                  <Input />
+                  <Select style={{ width: 150}}>
+                    <Option value='动物医学'>动物医学</Option>
+                    <Option value='风景园林'>风景园林</Option>
+                    <Option value='农林经济管理'>农林经济管理</Option>
+                    <Option value='生物科学类'>生物科学类</Option>
+                    <Option value='植物生产类（Ⅰ）'>植物生产类（Ⅰ）</Option>
+                    <Option value='金融学'>金融学</Option>
+                    <Option value='应用气象学'>应用气象学</Option>
+                    <Option value='行政管理'>行政管理</Option>
+                    <Option value='计算机类'>计算机类</Option>
+                    <Option value='法学类（法学）'>法学类（法学）</Option>
+                  </Select>
                 )
               }
             </FormItem>
